@@ -1,0 +1,22 @@
+﻿.center{left:25%;width:50%;height:50%;top:25%;position:absolute;text-align:center;}
+
+svg {
+    font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+.hidden {
+    display:none;
+}

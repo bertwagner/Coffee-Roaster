@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="Content/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="Content/site.css" />
+</head>
+<body>
+    <div data-role="page" id="loading-page">
+        <div class="center">
+                <img src="Content/Images/ajax-loader.gif" />
+        </div>
+    </div>
+    <div data-role="page" id="main-page" class="hidden">
+        <div data-role="header">
+            <h1>Web Roast</h1>
+
+            <a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-power ui-btn-icon-left ui-btn-icon-notext ui-btn-a ui-btn-right">Shutdown</a>
+            <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Shutdown?</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <h3 class="ui-title">Are you sure you want to shutdown Web Roast?</h3>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back">Cancel</a>
+                    <a href="#" id="shutdown" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow">Shutdown</a>
+                </div>
+            </div>
+        </div>
+
+        <div role="main" class="ui-content">
+            <fieldset id="relaySwitches" class="ui-grid-a">
+                <div class="ui-block-a" style="text-align:center;"><label for="fan-state">Fan:</label><input type="checkbox" data-role="flipswitch" name="fan-state" id="fan-state"></div>
+                <div class="ui-block-b" style="text-align:center;"><label for="heater-state">Heater:</label><input type="checkbox" data-role="flipswitch" name="heater-state" id="heater-state"></div>
+                <div class="ui-block-a" style="text-align:center;"><label for="hold-state">Hold:</label><input type="checkbox" data-role="flipswitch" name="hold-state" id="hold-state"></div>
+                <div class="ui-block-b" style="text-align:center; display:none;" id="hold-temperature"><label for="hold-state">Hold Temperature:</label><span id="numeric-hold-temperature"></span>°F</div>
+            </fieldset>
+
+            <div id="temperature">Actual Temperature: <span id="numeric-temperature"></span>°F</div>
+
+            <button class="ui-btn" id="record-start">Start Recording</button>
+            <button class="ui-btn ui-btn-b" id="record-stop" style="display:none;">Stop Recording</button>
+            <div id="data"></div>
+            <svg width="100%" height="240"></svg>
+        </div>
+
+
+
+    </div>
+
+    <script src="Scripts/jquery-2.2.4.min.js"></script>
+    <script src="Scripts/jquery.mobile-1.4.5.min.js"></script>
+    <script src="Scripts/d3.v4.js"></script>
+    <script src="Scripts/scripts.js"></script>
+</body>
+</html>
