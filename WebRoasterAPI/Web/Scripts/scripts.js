@@ -1,7 +1,7 @@
 ﻿var currentTemp = -999;
 var timerId = 0
 
-var holdTemp = -999;
+var holdTemp = 300;
 
 timerId = setInterval(function () {
     // Wait to show the main page until the temperature probe is online and reading data
@@ -36,30 +36,27 @@ $("#heater-state").on("change", function () {
 
 $("#hold-state").on("change", function () {
     if ($(this).is(":checked")) {
+        $("#fan-state").parent("div").addClass("ui-flipswitch-active");
+        $.get('api/Fan/ChangeState/On');
         $("#fan-state").attr("disabled", "disabled");
         $("#fan-state").parent("div").addClass("ui-state-disabled");
         $("#fan-state").parent("div").addClass("mobile-flipswitch-disabled");
+
+        $("#heater-state").parent("div").addClass("ui-flipswitch-active");
+        $.get('api/Heater/ChangeState/On');
         $("#heater-state").attr("disabled", "disabled");
         $("#heater-state").parent("div").addClass("ui-state-disabled");
         $("#heater-state").parent("div").addClass("mobile-flipswitch-disabled");
-
-        holdTemp = currentTemp;
-        $("#hold-temperature").show();
-        $("#numeric-hold-temperature").text(holdTemp);
     } else {
         $("#fan-state").removeAttr("disabled");
         $("#fan-state").parent("div").removeClass("ui-state-disabled");
         $("#fan-state").parent("div").removeClass("mobile-flipswitch-disabled");
+
+        $.get('api/Heater/ChangeState/Off');
+        $("#heater-state").parent("div").removeClass("ui-flipswitch-active");
         $("#heater-state").removeAttr("disabled");
         $("#heater-state").parent("div").removeClass("ui-state-disabled");
         $("#heater-state").parent("div").removeClass("mobile-flipswitch-disabled");
-        $("#hold-temperature").hide();
-
-        if ($("#heater-state").is(":checked")) {
-            $.get('api/Heater/ChangeState/On');
-        } else {
-            $.get('api/Heater/ChangeState/Off');
-        }
     }
 });
 
@@ -107,6 +104,7 @@ window.setInterval(function () {
 
     if ($("#hold-state").is(":checked"))
     {
+        
         if (currentTemp < holdTemp)
         {
             $.get('api/Heater/ChangeState/On');
@@ -126,6 +124,11 @@ function UpdateTimeTemperatureData() {
     data.push({ time: elapsedSeconds, temperature: currentTemp });
 };
 
+
+
+
+
+//Chart
 var margin = { top: 20, right: 40, bottom: 30, left: 25 },
     width = document.body.scrollWidth - margin.left - margin.right,
     height = 240 - margin.top - margin.bottom;
@@ -232,3 +235,12 @@ function UpdateGraph() {
       .duration(1000)
       .call(xAxis.ticks(numberOfTicks));
 };
+
+
+$(function () {
+    $(".knob").knob({
+        'change': function (v) {
+            holdTemp = v;
+        }
+    });
+});

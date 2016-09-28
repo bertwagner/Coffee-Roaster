@@ -37,8 +37,11 @@
             <fieldset id="relaySwitches" class="ui-grid-a">
                 <div class="ui-block-a" style="text-align:center;"><label for="fan-state">Fan:</label><input type="checkbox" data-role="flipswitch" name="fan-state" id="fan-state"></div>
                 <div class="ui-block-b" style="text-align:center;"><label for="heater-state">Heater:</label><input type="checkbox" data-role="flipswitch" name="heater-state" id="heater-state"></div>
-                <div class="ui-block-a" style="text-align:center;"><label for="hold-state">Hold:</label><input type="checkbox" data-role="flipswitch" name="hold-state" id="hold-state"></div>
-                <div class="ui-block-b" style="text-align:center; display:none;" id="hold-temperature"><label for="hold-state">Hold Temperature:</label><span id="numeric-hold-temperature"></span>°F</div>
+                <div class="ui-block-a demo" style="text-align:center;">
+                    <label for="hold-state">Hold Temperature:</label>
+                    <input class="knob" data-role="none" data-width="100" data-fgcolor="#ababab" data-thickness=".3" value="300" style="" data-min="0" data-max="600">
+                </div>
+                <div class="ui-block-b" style="text-align:center;"><label for="hold-state">Hold:</label><input type="checkbox" data-role="flipswitch" name="hold-state" id="hold-state"></div>
             </fieldset>
 
             <div id="temperature">Actual Temperature: <span id="numeric-temperature"></span>°F</div>
@@ -56,6 +59,11 @@
     <script src="Scripts/jquery-2.2.4.min.js"></script>
     <script src="Scripts/jquery.mobile-1.4.5.min.js"></script>
     <script src="Scripts/d3.v4.js"></script>
+    <script src="Scripts/jquery.knob.min.js"></script>
     <script src="Scripts/scripts.js"></script>
+    <script>
+
+        
+    </script>
 </body>
 </html>
