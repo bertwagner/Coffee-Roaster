@@ -138,7 +138,7 @@ function UpdateTimeTemperatureData() {
 //Chart
 var margin = { top: 20, right: 40, bottom: 30, left: 25 },
     width = document.body.scrollWidth - margin.left - margin.right,
-    height = 205 - margin.top - margin.bottom;
+    height = 200 - margin.top - margin.bottom;
 
 var xScale = d3.scaleLinear()
     .domain([0, d3.max(data, function (d, i) {
@@ -236,10 +236,10 @@ function UpdateGraph() {
 
     // Make the changes
     svg.select(".line")   // change the line
-      .duration(1000)
+      .duration(100)
       .attr("d", line(data));
     svg.select(".x.axis") // change the x axis
-      .duration(1000)
+      .duration(100)
       .call(xAxis.ticks(numberOfTicks));
 };
 

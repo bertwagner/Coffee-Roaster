@@ -20,3 +20,7 @@ svg {
 .hidden {
     display:none;
 }
+
+.ui-content {
+    padding-bottom:0;
+}
