@@ -71,6 +71,7 @@ $("#record-start").on("click", function () {
     startRun = true;
     $("#record-start").hide();
     $("#record-stop").show();
+    $("#time").show();
 });
 
 $("#record-stop").on("click", function () {
@@ -97,26 +98,32 @@ window.setInterval(function () {
 
     UpdateTemperatureDisplay();
 
-    if (startRun) {
-        UpdateTimeTemperatureData();
-        UpdateGraph();
-    }
+    if ($("#hold-state").is(":checked")) {
 
-    if ($("#hold-state").is(":checked"))
-    {
-        
-        if (currentTemp < holdTemp)
-        {
+        if (currentTemp < holdTemp) {
             $.get('api/Heater/ChangeState/On');
         } else {
             $.get('api/Heater/ChangeState/Off');
         }
+    }
+
+    if (startRun) {
+        UpdateTimeTemperatureData();
+        UpdateGraph();
+        UpdateTimeDisplay();
     }
 }, 100);
 
 
 function UpdateTemperatureDisplay() {
     $("#numeric-temperature").text(currentTemp);
+};
+function UpdateTimeDisplay() {
+    var elapsedSeconds = (new Date().getTime() - startAt) / 1000;
+    var date = new Date(null);
+    date.setSeconds(elapsedSeconds); // specify value for SECONDS here
+    
+    $("#numeric-time").text(date.toISOString().substr(11, 8));
 };
 
 function UpdateTimeTemperatureData() {
@@ -131,7 +138,7 @@ function UpdateTimeTemperatureData() {
 //Chart
 var margin = { top: 20, right: 40, bottom: 30, left: 25 },
     width = document.body.scrollWidth - margin.left - margin.right,
-    height = 240 - margin.top - margin.bottom;
+    height = 205 - margin.top - margin.bottom;
 
 var xScale = d3.scaleLinear()
     .domain([0, d3.max(data, function (d, i) {

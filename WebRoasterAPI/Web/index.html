@@ -39,17 +39,18 @@
                 <div class="ui-block-b" style="text-align:center;"><label for="heater-state">Heater:</label><input type="checkbox" data-role="flipswitch" name="heater-state" id="heater-state"></div>
                 <div class="ui-block-a demo" style="text-align:center;">
                     <label for="hold-state">Hold Temperature:</label>
-                    <input class="knob" data-role="none" data-width="100" data-fgcolor="#ababab" data-thickness=".3" value="300" style="" data-min="0" data-max="600">
+                    <input class="knob" data-role="none" data-width="75" data-height="75" data-fgcolor="#ababab" data-thickness=".3" value="300" style="" data-min="0" data-max="600">
                 </div>
                 <div class="ui-block-b" style="text-align:center;"><label for="hold-state">Hold:</label><input type="checkbox" data-role="flipswitch" name="hold-state" id="hold-state"></div>
+                <div id="temperature" class="ui-block-a" style="text-align:center;"><label for="numeric-temperture">Actual Temperature:</label><span id="numeric-temperature"></span>°F</div>
+                <div id="time" class="ui-block-b" style="display:none;text-align:center;"><label for="numeric-time">Elapsed Time:</label><span id="numeric-time"></span></div>
             </fieldset>
 
-            <div id="temperature">Actual Temperature: <span id="numeric-temperature"></span>°F</div>
-
+            
             <button class="ui-btn" id="record-start">Start Recording</button>
             <button class="ui-btn ui-btn-b" id="record-stop" style="display:none;">Stop Recording</button>
             <div id="data"></div>
-            <svg width="100%" height="240"></svg>
+            <svg width="100%" height="205"></svg>
         </div>
 
 
