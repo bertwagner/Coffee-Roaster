@@ -1,4 +1,6 @@
 
-# Coffee  ![Coffee Roaster](/WebRoasterAPI/Web/Content/Images/apple-icon-114x114.png?raw=true "Coffee Roaster" =30x30) 
-A Raspberry Pi 3 coffee roaster running on Windows IOT.  
+# <img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/WebRoasterAPI/Web/Content/Images/apple-icon-114x114.png?raw=true" width="40" title="Coffee Roaster"> Coffee Roaster 
+A Raspberry Pi 3 coffee roaster running on Windows IOT.
+
+---
 
