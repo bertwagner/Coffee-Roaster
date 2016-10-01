@@ -114,7 +114,6 @@ window.setInterval(function () {
     }
 }, 100);
 
-
 function UpdateTemperatureDisplay() {
     $("#numeric-temperature").text(currentTemp);
 };
@@ -130,10 +129,6 @@ function UpdateTimeTemperatureData() {
     var elapsedSeconds = Math.floor((new Date().getTime() - startAt) / 1000);
     data.push({ time: elapsedSeconds, temperature: currentTemp });
 };
-
-
-
-
 
 //Chart
 var margin = { top: 20, right: 40, bottom: 30, left: 25 },

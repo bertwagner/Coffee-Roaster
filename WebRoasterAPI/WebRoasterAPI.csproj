@@ -122,6 +122,8 @@
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Web\Content\Images\ajax-loader.gif" />
+    <Content Include="Web\Content\Images\apple-icon-114x114.png" />
+    <Content Include="Web\Content\Images\apple-icon-144x144.png" />
     <Content Include="Web\Content\jquery.mobile-1.4.5.min.css" />
     <Content Include="Web\Content\site.css" />
     <Content Include="Web\index.html" />
