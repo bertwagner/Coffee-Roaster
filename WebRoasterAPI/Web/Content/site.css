@@ -20,3 +20,8 @@ svg {
 .hidden {
     display:none;
 }
+
+.danger-flash {
+    color:red; 
+    font-weight: bold; 
+}

@@ -8,3 +8,5 @@ A Raspberry Pi 3 coffee roaster running on Windows IOT.
  * Switches for controlling fan and heating elements separately 
  * Ability to hold a steady temperature
  * Chart to display roasting profile
+ * Automatic safety cool-down if temperatures too high
+ * REST API control of hardware for easy integration across platforms

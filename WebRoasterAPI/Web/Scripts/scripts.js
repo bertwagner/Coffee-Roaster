@@ -129,9 +129,25 @@ function UpdateTimeDisplay() {
 function CheckSafeTemperature() {
     // if the temperature is above 100, we want to make sure the fan is on so no components melt
     if (currentTemp > 100) {
-        $.get('api/Fan/ChangeState/On');
-        $("#fan-state").parent("div").addClass("ui-flipswitch-active");
-        $("#fan-state").attr("checked","")
+        $.get('api/Fan/GetState', function (isFanOn) {
+            console.log(isFanOn);
+            // if the fan is off, turn it on and flash a temperature warning
+            if (!isFanOn)
+            {
+                $.get('api/Fan/ChangeState/On');
+                $("#fan-state").parent("div").addClass("ui-flipswitch-active");
+                $("#fan-state").attr("checked", "");
+
+                $("#numeric-temperature").addClass("danger-flash");
+
+                window.setInterval(function () {
+                    $("#numeric-temperature").removeClass("danger-flash");
+                }, 1000);
+            }
+        });
+
+        
+        
     }
 }
 
