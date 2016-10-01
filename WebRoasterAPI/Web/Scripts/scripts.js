@@ -97,6 +97,7 @@ window.setInterval(function () {
     });
 
     UpdateTemperatureDisplay();
+    CheckSafeTemperature();
 
     if ($("#hold-state").is(":checked")) {
 
@@ -124,6 +125,15 @@ function UpdateTimeDisplay() {
     
     $("#numeric-time").text(date.toISOString().substr(11, 8));
 };
+
+function CheckSafeTemperature() {
+    // if the temperature is above 100, we want to make sure the fan is on so no components melt
+    if (currentTemp > 100) {
+        $.get('api/Fan/ChangeState/On');
+        $("#fan-state").parent("div").addClass("ui-flipswitch-active");
+        $("#fan-state").attr("checked","")
+    }
+}
 
 function UpdateTimeTemperatureData() {
     var elapsedSeconds = Math.floor((new Date().getTime() - startAt) / 1000);
@@ -161,7 +171,7 @@ var line = d3.line()
 var svg = d3.select("div#chart")
     .append("div")
    .append("svg")
-   .attr("preserveAspectRatio", "xMaxYMin meet")
+   .attr("preserveAspectRatio", "xMinYMin meet")
    .attr("viewBox", -margin.left + " " + -margin.top + " " + (450+margin.right) +" 350");
 
 

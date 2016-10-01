@@ -40,5 +40,10 @@ namespace WebRoasterAPI.Controllers.Device
             pin.Write(value);
             IsOn = false;
         }
+
+        public bool GetState()
+        {
+            return IsOn;
+        }
     }
 }

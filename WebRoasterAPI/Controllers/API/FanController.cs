@@ -32,5 +32,14 @@ namespace WebRoasterAPI.Controllers.API
                 "Fan " + state
                 );
         }
+
+        [UriFormat("/Fan/GetState")]
+        public IGetResponse GetState()
+        {
+            return new GetResponse(
+                GetResponse.ResponseStatus.OK,
+                fan.GetState()
+                );
+        }
     }
 }
