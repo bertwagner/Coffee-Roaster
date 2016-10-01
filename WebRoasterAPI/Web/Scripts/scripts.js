@@ -131,9 +131,9 @@ function UpdateTimeTemperatureData() {
 };
 
 //Chart
-var margin = { top: 20, right: 40, bottom: 30, left: 25 },
-    width = document.body.scrollWidth - margin.left - margin.right,
-    height = 200 - margin.top - margin.bottom;
+var margin = { top: 20, right: 25, bottom: 30, left: 25 },
+    width = 450 - margin.left - margin.right,
+    height = 350 - margin.top - margin.bottom;
 
 var xScale = d3.scaleLinear()
     .domain([0, d3.max(data, function (d, i) {
@@ -158,11 +158,12 @@ var line = d3.line()
     .x(function (d) { return xScale(d.time); })
     .y(function (d) { return yScale(d.temperature); });
 
-var svg = d3.select("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var svg = d3.select("div#chart")
+    .append("div")
+   .append("svg")
+   .attr("preserveAspectRatio", "xMaxYMin meet")
+   .attr("viewBox", -margin.left + " " + -margin.top + " " + (450+margin.right) +" 350");
+
 
 svg.append("defs").append("clipPath")
     .attr("id", "clip")
