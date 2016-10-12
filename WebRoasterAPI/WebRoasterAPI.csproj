@@ -126,6 +126,7 @@
     <Content Include="Web\Content\Images\apple-icon-144x144.png" />
     <Content Include="Web\Content\Images\CoffeeBeans.jpg" />
     <Content Include="Web\Content\Images\CoffeeRoaster.jpg" />
+    <Content Include="Web\Content\Images\Schematic.jpg" />
     <Content Include="Web\Content\Images\WebApp.png" />
     <Content Include="Web\Content\Images\Logo-300x300.png" />
     <Content Include="Web\Content\jquery.mobile-1.4.5.min.css" />

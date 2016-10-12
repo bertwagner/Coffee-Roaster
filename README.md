@@ -3,7 +3,7 @@
 A Raspberry Pi 3 coffee roaster running on Windows IOT.
 
 ---
-<img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/WebRoasterAPI/Web/Content/Images/CoffeeRoaster.jpg?raw=true" width="400" title="Coffee Roaster">
+<img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/WebRoasterAPI/Web/Content/Images/CoffeeRoaster.jpg?raw=true" width="600" title="Coffee Roaster">
 ### Purpose
 Coffee roasting at home allows complete control over the final flavor of a cup of coffee.  
 
@@ -18,6 +18,8 @@ Although many manual methods can be used for roasting coffee beans at home, I wa
  * Chart to display roasting profile
  * Automatic safety cool-down if temperature is too high
  * REST API control of hardware for easy integration across platforms
+
+<img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/WebRoasterAPI/Web/Content/Images/Schematic.jpg?raw=true" width="600" title="Coffee Roaster">
 
 ### Hardware
  * Raspberry Pi 3
