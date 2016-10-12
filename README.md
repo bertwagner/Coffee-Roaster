@@ -1,6 +1,6 @@
 
 # <img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/WebRoasterAPI/Web/Content/Images/apple-icon-114x114.png?raw=true" width="40" title="Coffee Roaster"> Coffee Roaster 
-A Raspberry Pi 3 coffee roaster running on Windows IOT.
+A Raspberry Pi 3 coffee roaster running on Windows IoT.
 
 ---
 <img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/WebRoasterAPI/Web/Content/Images/CoffeeRoaster.jpg?raw=true" width="600" title="Coffee Roaster">
