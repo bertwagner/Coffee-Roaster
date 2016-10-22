@@ -26,6 +26,7 @@ namespace WebRoasterAPI
             restRouteHandler.RegisterController<FanController>();
             restRouteHandler.RegisterController<TemperatureController>();
             restRouteHandler.RegisterController<SystemController>();
+            restRouteHandler.RegisterController<ProfileController>();
 
             var httpServer = new HttpServer(8800);
             httpServer.RegisterRoute(new StaticFileRouteHandler(@"Web"));

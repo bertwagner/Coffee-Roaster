@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Coffee Roaster</title>
+    <link rel="stylesheet" href="Content/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="Content/site.css" />
+    <link rel="apple-touch-icon" sizes="114x114" href="Content/Images/apple-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="Content/Images/apple-icon-144x144.png" />
+</head>
+<body>
+
+
+    <div data-role="header">
+        <h1>Web Roast</h1>
+
+        <a href="index.html" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-back ui-btn-icon-left ui-btn-icon-notext ui-btn-a">Back</a>
+        <a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-power ui-btn-icon-left ui-btn-icon-notext ui-btn-a ui-btn-right">Shutdown</a>
+        <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+            <div data-role="header" data-theme="a">
+                <h1>Shutdown?</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <h3 class="ui-title">Are you sure you want to shutdown Web Roast?</h3>
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back">Cancel</a>
+                <a href="#" id="shutdown" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow">Shutdown</a>
+            </div>
+        </div>
+    </div>
+
+    <div role="main" class="ui-content">
+        <p>Choose a profile to run:</p>
+        <select id="profile">
+            <option value="1">Profile #1</option>
+        </select>
+        <button class="ui-btn" id="start-profile">Run Profile</button>
+        <button class="ui-btn ui-btn-b" id="wait-profile" style="display:none;" disabled="disabled">Waiting to cool down...</button>
+        <button class="ui-btn ui-btn-b" id="stop-profile" style="display:none;">Stop Profile</button>
+
+    </div>
+
+
+    <script src="Scripts/jquery-2.2.4.min.js"></script>
+    <script src="Scripts/jquery.mobile-1.4.5.min.js"></script>
+    <script src="Scripts/scripts-run-profile.js"></script>
+</body>
+</html>
