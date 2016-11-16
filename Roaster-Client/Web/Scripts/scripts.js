@@ -1,4 +1,7 @@
-﻿var currentTemp = -999;
+﻿var ip = location.host.substring(0, location.host.indexOf(":"))
+var apiHost = "http://" + ip + ":9900/";
+
+var currentTemp = -999;
 var timerId = 0
 
 var holdTemp = 300;
@@ -20,30 +23,30 @@ timerId = setInterval(function () {
 
 $("#fan-state").on("change", function () {
     if ($(this).is(":checked")) {
-        $.get('api/Fan/ChangeState/On');
+        $.get(apiHost + 'api/Fan/ChangeState/On');
     } else {
-        $.get('api/Fan/ChangeState/Off');
+        $.get(apiHost + 'api/Fan/ChangeState/Off');
     }
 });
 
 $("#heater-state").on("change", function () {
     if ($(this).is(":checked")) {
-        $.get('api/Heater/ChangeState/On');
+        $.get(apiHost + 'api/Heater/ChangeState/On');
     } else {
-        $.get('api/Heater/ChangeState/Off');
+        $.get(apiHost + 'api/Heater/ChangeState/Off');
     }
 });
 
 $("#hold-state").on("change", function () {
     if ($(this).is(":checked")) {
         $("#fan-state").parent("div").addClass("ui-flipswitch-active");
-        $.get('api/Fan/ChangeState/On');
+        $.get(apiHost + 'api/Fan/ChangeState/On');
         $("#fan-state").attr("disabled", "disabled");
         $("#fan-state").parent("div").addClass("ui-state-disabled");
         $("#fan-state").parent("div").addClass("mobile-flipswitch-disabled");
 
         $("#heater-state").parent("div").addClass("ui-flipswitch-active");
-        $.get('api/Heater/ChangeState/On');
+        $.get(apiHost + 'api/Heater/ChangeState/On');
         $("#heater-state").attr("disabled", "disabled");
         $("#heater-state").parent("div").addClass("ui-state-disabled");
         $("#heater-state").parent("div").addClass("mobile-flipswitch-disabled");
@@ -52,7 +55,7 @@ $("#hold-state").on("change", function () {
         $("#fan-state").parent("div").removeClass("ui-state-disabled");
         $("#fan-state").parent("div").removeClass("mobile-flipswitch-disabled");
 
-        $.get('api/Heater/ChangeState/Off');
+        $.get(apiHost + 'api/Heater/ChangeState/Off');
         $("#heater-state").parent("div").removeClass("ui-flipswitch-active");
         $("#heater-state").removeAttr("disabled");
         $("#heater-state").parent("div").removeClass("ui-state-disabled");
@@ -85,7 +88,7 @@ $("#shutdown").on('click', function () {
 });
 
 window.setInterval(function () {
-    $.get('api/Temperature/GetTemperature', function (data) {
+    $.get(apiHost + 'api/Temperature/GetTemperature', function (data) {
         // If the current temperature is more than 100 degrees different, and it isn't -999 (right after initialization), then don't add it because it must be a bad temperature reading
         if (Math.abs(currentTemp - data) > 100 && currentTemp != -999) {
             currentTemp = currentTemp;
@@ -102,9 +105,9 @@ window.setInterval(function () {
     if ($("#hold-state").is(":checked")) {
 
         if (currentTemp < holdTemp) {
-            $.get('api/Heater/ChangeState/On');
+            $.get(apiHost + 'api/Heater/ChangeState/On');
         } else {
-            $.get('api/Heater/ChangeState/Off');
+            $.get(apiHost + 'api/Heater/ChangeState/Off');
         }
     }
 
@@ -129,12 +132,12 @@ function UpdateTimeDisplay() {
 function CheckSafeTemperature() {
     // if the temperature is above 100, we want to make sure the fan is on so no components melt
     if (currentTemp > 100) {
-        $.get('api/Fan/GetState', function (isFanOn) {
+        $.get(apiHost + 'api/Fan/GetState', function (isFanOn) {
             console.log(isFanOn);
             // if the fan is off, turn it on and flash a temperature warning
             if (!isFanOn)
             {
-                $.get('api/Fan/ChangeState/On');
+                $.get(apiHost + 'api/Fan/ChangeState/On');
                 $("#fan-state").parent("div").addClass("ui-flipswitch-active");
                 $("#fan-state").attr("checked", "");
 
