@@ -1,15 +1,15 @@
 
-# <img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/WebRoasterAPI/Web/Content/Images/apple-icon-114x114.png?raw=true" width="40" title="Coffee Roaster"> Coffee Roaster 
+# <img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/Roaster-Client/Web/Content/Images/apple-icon-114x114.png?raw=true" width="40" title="Coffee Roaster"> Coffee Roaster 
 A Raspberry Pi 3 coffee roaster running on Windows IoT.
 
 ---
-<img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/WebRoasterAPI/Web/Content/Images/CoffeeRoaster.jpg?raw=true" width="600" title="Coffee Roaster">
+<img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/Roaster-Client/Web/Content/Images/CoffeeRoaster.jpg?raw=true" width="600" title="Coffee Roaster">
 ### Purpose
 Coffee roasting at home allows complete control over the final flavor of a cup of coffee.  
 
 Although many manual methods can be used for roasting coffee beans at home, I wanted a precise and mostly automated way of roasting small batches of beans.
 
-<img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/WebRoasterAPI/Web/Content/Images/WebApp.png?raw=true" width="400" title="Coffee Roaster">
+<img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/Roaster-Client/Web/Content/Images/WebApp.png?raw=true" width="400" title="Coffee Roaster">
 
 ### Features
  * Operated via web app on a mobile device
@@ -19,7 +19,7 @@ Although many manual methods can be used for roasting coffee beans at home, I wa
  * Automatic safety cool-down if temperature is too high
  * REST API control of hardware for easy integration across platforms
 
-<img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/WebRoasterAPI/Web/Content/Images/Schematic.jpg?raw=true" width="600" title="Coffee Roaster">
+<img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/Roaster-Client/Web/Content/Images/Schematic.jpg?raw=true" width="600" title="Coffee Roaster">
 
 ### Hardware
  * Raspberry Pi 3
