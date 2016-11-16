@@ -9,7 +9,7 @@ namespace Roaster_Client
         BackgroundTaskDeferral deferral;
 
         public async void Run(IBackgroundTaskInstance taskInstance)
-        {
+        { 
             deferral = taskInstance.GetDeferral();
 
             // Start the HTTP server
