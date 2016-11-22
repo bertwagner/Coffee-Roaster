@@ -38,7 +38,7 @@ namespace Roast_Server.Controllers.API
         {
             return new GetResponse(
                 GetResponse.ResponseStatus.OK,
-                fan.GetState()
+                fan.IsOn()
                 );
         }
     }

@@ -15,11 +15,7 @@ namespace Roaster_Server
 
             // Start the API server
             var restRouteHandler = new RestRouteHandler();
-            restRouteHandler.RegisterController<HeaterController>();
-            restRouteHandler.RegisterController<FanController>();
-            restRouteHandler.RegisterController<TemperatureController>();
-            restRouteHandler.RegisterController<SystemController>();
-            restRouteHandler.RegisterController<ProfileController>();
+            restRouteHandler.RegisterController<RoasterController>();
 
             var configuration = new HttpServerConfiguration()
               .ListenOnPort(9900)

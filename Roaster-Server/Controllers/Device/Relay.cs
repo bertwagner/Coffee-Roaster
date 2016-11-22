@@ -12,7 +12,7 @@ namespace Roast_Server.Controllers.Device
         private GpioPinValue value = GpioPinValue.Low;
         private int RelayPin;
         private GpioPin pin;
-        public bool IsOn = false;
+        public bool IsOnState = false;
 
         public Relay(int relayPin)
         {
@@ -31,19 +31,19 @@ namespace Roast_Server.Controllers.Device
         {
             value = GpioPinValue.High;
             pin.Write(value);
-            IsOn = true;
+            IsOnState = true;
         }
 
         public void Off()
         {
             value = GpioPinValue.Low;
             pin.Write(value);
-            IsOn = false;
+            IsOnState = false;
         }
 
-        public bool GetState()
+        public bool IsOn()
         {
-            return IsOn;
+            return IsOnState;
         }
     }
 }

@@ -2,6 +2,7 @@
 # <img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/Roaster-Client/Web/Content/Images/apple-icon-114x114.png?raw=true" width="40" title="Coffee Roaster"> Coffee Roaster 
 A Raspberry Pi 3 coffee roaster running on Windows IoT.
 
+[![BCH compliancy](https://bettercodehub.com/edge/badge/bertwagner/Coffee-Roaster)](https://bettercodehub.com)
 ---
 <img src="https://github.com/bertwagner/Coffee-Roaster/blob/master/Roaster-Client/Web/Content/Images/CoffeeRoaster.jpg?raw=true" width="600" title="Coffee Roaster">
 ### Purpose

@@ -96,10 +96,11 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apps\RoasterApp.cs" />
+    <Compile Include="Controllers\API\RoasterController.cs" />
     <Compile Include="Controllers\API\FanController.cs" />
     <Compile Include="Controllers\API\HeaterController.cs" />
     <Compile Include="Controllers\API\ProfileController.cs" />
-    <Compile Include="Controllers\API\SystemController.cs" />
     <Compile Include="Controllers\API\TemperatureController.cs" />
     <Compile Include="Controllers\Device\Relay.cs" />
     <Compile Include="Controllers\Device\TemperatureProbe.cs" />

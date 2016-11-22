@@ -119,7 +119,7 @@ namespace Roast_Server.Controllers.Device
             }
             catch (Exception ex)
             {
-                return -1.0m;
+                return -10000.0m;
             }
         }
 
