@@ -8,8 +8,27 @@
 <body>
 
     <p>Hold temperature</p>
-    <input type="text" id="holdTemperature" value="100" />
-    <
+    <input type="text" id="holdTemperature" type="number" value="100" />
+    
+    <button id="holdOn">Hold On</button>
+    <button id="holdOn">Hold Off</button>
 
+    <script src="Scripts/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript">
+        var ip = location.host.substring(0, location.host.indexOf(":"))
+        var apiHost = "http://" + ip + ":9900/";
+
+        $("#holdOn").click(function () {
+            var holdTemperature = $("#holdTemperature").val();
+
+            $.get(apiHost + "api/Roaster/HoldTemperature/On/" + holdTemperature);
+        });
+
+        $("#holdOff").click(function () {
+            var holdTemperature = $("holdTemperature").val();
+
+            $.get(apiHost + "api/Roaster/HoldTemperature/Off");
+        });
+    </script>
 </body>
 </html>

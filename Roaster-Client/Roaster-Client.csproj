@@ -144,8 +144,6 @@
     <Content Include="Web\Scripts\d3.v4.js" />
     <Content Include="Web\Scripts\jquery-2.2.4.min.js" />
     <Content Include="Web\Scripts\jquery.knob.min.js" />
-    <Content Include="Web\Scripts\jquery.mobile-1.4.5.min.js" />
-    <Content Include="Web\Scripts\scripts-run-profile.js" />
     <Content Include="Web\Scripts\scripts.js" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

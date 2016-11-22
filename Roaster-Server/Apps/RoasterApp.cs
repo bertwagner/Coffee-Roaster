@@ -155,7 +155,5 @@ namespace Roaster_Server.Apps
         {
             return isHoldOn;
         }
-
-        
     }
 }
