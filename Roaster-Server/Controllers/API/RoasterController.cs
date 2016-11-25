@@ -10,6 +10,7 @@ using Restup.Webserver.Models.Contracts;
 using Windows.System;
 using Roaster_Server.Apps;
 using System.Diagnostics;
+using Roaster_Server.Models;
 
 namespace Roast_Server.Controllers.API
 {
@@ -42,6 +43,14 @@ namespace Roast_Server.Controllers.API
             roaster.HoldOff();
 
             return new GetResponse(GetResponse.ResponseStatus.OK);
+        }
+
+        [UriFormat("/Roaster/Status/Get")]
+        public IGetResponse GetRoasterStatus()
+        {
+            RoasterStatus status = roaster.GetRoasterStatus();
+
+            return new GetResponse(GetResponse.ResponseStatus.OK, status);
         }
     }
 }

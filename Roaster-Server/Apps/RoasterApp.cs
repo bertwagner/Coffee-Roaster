@@ -1,4 +1,6 @@
 ﻿using Roast_Server.Controllers.Device;
+using Roast_Server.Models;
+using Roaster_Server.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,6 +21,7 @@ namespace Roaster_Server.Apps
         private decimal holdFahrenheitTemperature { get; set; }
         private bool isHoldOn { get; set; }
         private bool runLoop { get; set; }
+        private List<RoastProfile> roastProfile { get; set; }
 
         public RoasterApp()
         {
@@ -27,6 +30,16 @@ namespace Roaster_Server.Apps
             isHoldOn = false;
             holdFahrenheitTemperature = 0;
             runLoop = true;
+            roastProfile = new List<RoastProfile>
+            {
+                new RoastProfile { TimeInSeconds = 180, HoldTemperature = 300 },
+                new RoastProfile { TimeInSeconds = 240, HoldTemperature = 333 },
+                new RoastProfile { TimeInSeconds = 300, HoldTemperature = 366 },
+                new RoastProfile { TimeInSeconds = 360, HoldTemperature = 400 },
+                new RoastProfile { TimeInSeconds = 420, HoldTemperature = 415 },
+                new RoastProfile { TimeInSeconds = 480, HoldTemperature = 430 },
+                new RoastProfile { TimeInSeconds = 510, HoldTemperature = 445 }
+            };
 
             // Start the roaster loop on a new thread
             Task t = Task.Factory.StartNew(() => { StartRoasterLoop(); });
@@ -88,6 +101,19 @@ namespace Roaster_Server.Apps
             return currentTemperature;
         }
         #endregion
+
+        public RoasterStatus GetRoasterStatus()
+        {
+            RoasterStatus status = new RoasterStatus();
+            status.CurrentHoldTemperature = GetHoldTemperture();
+            status.CurrentTemperature = GetFahrenheitTemperature();
+            status.IsHoldOn = IsHoldOn();
+            status.IsFanOn = fan.IsOn();
+            status.IsHeaterOn = heater.IsOn();
+            status.RoastProfile = GetRoastProfile();
+
+            return status;
+        }
 
         public void StartRoasterLoop()
         {
@@ -154,6 +180,16 @@ namespace Roaster_Server.Apps
         public bool IsHoldOn()
         {
             return isHoldOn;
+        }
+
+        public decimal GetHoldTemperture()
+        {
+            return holdFahrenheitTemperature;
+        }
+
+        public List<RoastProfile> GetRoastProfile()
+        {
+            return roastProfile;
         }
     }
 }

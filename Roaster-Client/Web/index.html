@@ -11,7 +11,9 @@
     <input type="text" id="holdTemperature" type="number" value="100" />
     
     <button id="holdOn">Hold On</button>
-    <button id="holdOn">Hold Off</button>
+    <button id="holdOff">Hold Off</button>
+
+    <pre id="roasterStatus"></pre>
 
     <script src="Scripts/jquery-2.2.4.min.js"></script>
     <script type="text/javascript">
@@ -29,6 +31,13 @@
 
             $.get(apiHost + "api/Roaster/HoldTemperature/Off");
         });
+
+        // Replace this with sockets maybe?
+        window.setInterval(function () {
+            $.get(apiHost + 'api/Roaster/Status/Get', function (data) {
+                $("#roasterStatus").text(JSON.stringify(data, null, 2));
+            });
+        }, 1000);
     </script>
 </body>
 </html>
