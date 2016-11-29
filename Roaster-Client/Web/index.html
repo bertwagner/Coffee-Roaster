@@ -19,6 +19,7 @@
     <script type="text/javascript">
         var ip = location.host.substring(0, location.host.indexOf(":"))
         var apiHost = "http://" + ip + ":9900/";
+        $("#holdOff").hide();
 
         $("#holdOn").click(function () {
             var holdTemperature = $("#holdTemperature").val();
@@ -32,10 +33,28 @@
             $.get(apiHost + "api/Roaster/HoldTemperature/Off");
         });
 
-        // Replace this with sockets maybe?
+        
+        var prevHoldTemperature = 100;
         window.setInterval(function () {
             $.get(apiHost + 'api/Roaster/Status/Get', function (data) {
                 $("#roasterStatus").text(JSON.stringify(data, null, 2));
+
+                // Update view with data from server
+                if (prevHoldTemperature != data.CurrentHoldTemperature) {
+                    $("#holdTemperature").val(data.CurrentHoldTemperature);
+                    prevHoldTemperature = data.CurrentHoldTemperature;
+                }
+                
+                if (data.IsHoldOn)
+                {
+                    $("#holdOn").hide();
+                    $("#holdOff").show();
+                }
+                else
+                {
+                    $("#holdOn").show();
+                    $("#holdOff").hide();
+                }
             });
         }, 1000);
     </script>

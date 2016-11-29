@@ -22,7 +22,7 @@ namespace Roast_Server.Controllers.API
         [UriFormat("/Roaster/Shutdown")]
         public IGetResponse Shutdown()
         {
-            //roaster.Shutdown();
+            roaster.Shutdown();
 
             return new GetResponse(
                 GetResponse.ResponseStatus.OK

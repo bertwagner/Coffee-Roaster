@@ -10,19 +10,19 @@ namespace Roast_Server.Controllers.Device
     class Relay
     {
         private GpioPinValue value = GpioPinValue.Low;
-        private int RelayPin;
+        private int relayPin;
         private GpioPin pin;
-        public bool IsOnState = false;
+        private bool isOn = false;
 
         public Relay(int relayPin)
         {
-            RelayPin = relayPin;
+            this.relayPin = relayPin;
             InitGPIO();
         }
 
         private void InitGPIO()
         {
-            pin = GpioController.GetDefault().OpenPin(RelayPin);
+            pin = GpioController.GetDefault().OpenPin(relayPin);
             pin.Write(value);
             pin.SetDriveMode(GpioPinDriveMode.Output);
         }
@@ -31,19 +31,19 @@ namespace Roast_Server.Controllers.Device
         {
             value = GpioPinValue.High;
             pin.Write(value);
-            IsOnState = true;
+            isOn = true;
         }
 
         public void Off()
         {
             value = GpioPinValue.Low;
             pin.Write(value);
-            IsOnState = false;
+            isOn = false;
         }
 
         public bool IsOn()
         {
-            return IsOnState;
+            return isOn;
         }
     }
 }
