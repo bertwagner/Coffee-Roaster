@@ -22,6 +22,8 @@ namespace Roaster_Server.Apps
         private bool isHoldOn { get; set; }
         private bool runLoop { get; set; }
         private List<RoastProfile> roastProfile { get; set; }
+        private bool isProfileRunning { get; set; }
+        private double profileElapsedSeconds { get; set; }
 
         public RoasterApp()
         {
@@ -56,6 +58,8 @@ namespace Roaster_Server.Apps
             status.IsHoldOn = IsHoldOn();
             status.IsFanOn = fan.IsOn();
             status.IsHeaterOn = heater.IsOn();
+            status.IsProfileRunning = IsProfileRunning();
+            status.ProfileElapsedSeconds = GetProfileElapsedSeconds();
             status.RoastProfile = GetRoastProfile();
 
             return status;
@@ -68,7 +72,7 @@ namespace Roaster_Server.Apps
                 // The fan must always be on if the heater is on so components don't melt
                 if (!fan.IsOn() && heater.IsOn())
                 {
-                    
+                    fan.On();
                 }
 
                 // If the hold is off, make sure the fan stays on until the temperature goes below 100*F
@@ -90,18 +94,35 @@ namespace Roaster_Server.Apps
                 // If the Hold button is on, alternate between turning the heater on/off until the Hold temperature is reached
                 if (IsHoldOn())
                 {
-                    decimal currentTemperature = temperatureProbe.CurrentTemperature();
-                    if (currentTemperature <= holdFahrenheitTemperature)
+                    MaintainTemperature(GetHoldTemperture());
+                }
+
+                // If the roast profile is on, follow the temperature and time settings indicated by the profile
+                if (IsProfileRunning())
+                {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+                    profileElapsedSeconds = sw.ElapsedMilliseconds / 1000.0;
+
+                    for (int i = 0; i < roastProfile.Count; i++)
                     {
-                        heater.On();
-                    }
-                    else
-                    {
-                        heater.Off();
+                        while (profileElapsedSeconds < roastProfile[i].TimeInSeconds)
+                        {
+                            MaintainTemperature(Convert.ToDecimal(roastProfile[i].HoldTemperature));
+
+                            profileElapsedSeconds = sw.ElapsedMilliseconds / 1000.0;
+                            //Exit loop if profile has been turned off
+                            if (!IsProfileRunning())
+                                return;
+                        }
+                        //Exit loop if profile has been turned off
+                        if (!IsProfileRunning())
+                            return;
                     }
 
-                    Debug.WriteLine("Temperature: {0}, Hold Temperature: {1}", currentTemperature, holdFahrenheitTemperature);
+                    StopProfile();
                 }
+
 
                 // Log the time/temperature data
                 Debug.WriteLine("Temperature: {0}, Hold: {1}, Hold Temperature: {2}", temperatureProbe.CurrentTemperature(), (IsHoldOn()) ? "On" : "Off", holdFahrenheitTemperature);
@@ -109,6 +130,21 @@ namespace Roaster_Server.Apps
                 // Slow down our loop so it only runs every 100ms
                 Task.Delay(100).Wait();
             }
+        }
+
+        private void MaintainTemperature(decimal temperature)
+        {
+            fan.On();
+            decimal currentTemperature = temperatureProbe.CurrentTemperature();
+            if (currentTemperature <= temperature)
+            {
+                heater.On();
+            }
+            else
+            {
+                heater.Off();
+            }
+
         }
 
         public void Shutdown()
@@ -142,6 +178,31 @@ namespace Roaster_Server.Apps
         public List<RoastProfile> GetRoastProfile()
         {
             return roastProfile;
+        }
+
+        public void SetRoastProfile(List<RoastProfile> profile)
+        {
+            roastProfile = profile;
+        }
+
+        public void RunProfile()
+        {
+            isProfileRunning = true;
+        }
+
+        public void StopProfile()
+        {
+            isProfileRunning = false;
+        }
+
+        public bool IsProfileRunning()
+        {
+            return isProfileRunning;
+        }
+
+        public double GetProfileElapsedSeconds()
+        {
+            return profileElapsedSeconds;
         }
     }
 }

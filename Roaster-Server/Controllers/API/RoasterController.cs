@@ -11,6 +11,9 @@ using Windows.System;
 using Roaster_Server.Apps;
 using System.Diagnostics;
 using Roaster_Server.Models;
+using Roast_Server.Models;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace Roast_Server.Controllers.API
 {
@@ -51,6 +54,23 @@ namespace Roast_Server.Controllers.API
             RoasterStatus status = roaster.GetRoasterStatus();
 
             return new GetResponse(GetResponse.ResponseStatus.OK, status);
+        }
+
+        [UriFormat("/Roaster/Profile/Run/{profile}")]
+        public IGetResponse RunProfile(string profile)
+        {
+            List<RoastProfile> roastProfile = JsonConvert.DeserializeObject<List<RoastProfile>>(profile);
+            roaster.SetRoastProfile(roastProfile);
+            roaster.RunProfile();
+
+            return new GetResponse(GetResponse.ResponseStatus.OK);
+        }
+
+        [UriFormat("/Roaster/Profile/Stop")]
+        public IGetResponse StopProfile()
+        {
+            roaster.StopProfile();
+            return new GetResponse(GetResponse.ResponseStatus.OK);
         }
     }
 }

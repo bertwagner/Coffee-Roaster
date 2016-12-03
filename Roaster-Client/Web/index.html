@@ -13,6 +13,11 @@
     <button id="holdOn">Hold On</button>
     <button id="holdOff">Hold Off</button>
 
+    <br />
+    <textarea id="roastProfile" rows="10" cols="50"></textarea>
+    <button id="profileRun">Run Profile</button>
+    <button id="profileStop">Stop Profile</button>
+
     <pre id="roasterStatus"></pre>
 
     <script src="Scripts/jquery-2.2.4.min.js"></script>
@@ -20,6 +25,7 @@
         var ip = location.host.substring(0, location.host.indexOf(":"))
         var apiHost = "http://" + ip + ":9900/";
         $("#holdOff").hide();
+        $("#profileStop").hide();
 
         $("#holdOn").click(function () {
             var holdTemperature = $("#holdTemperature").val();
@@ -33,8 +39,18 @@
             $.get(apiHost + "api/Roaster/HoldTemperature/Off");
         });
 
+        $("#profileRun").click(function () {
+            var roastProfile = $("#roastProfile").val();
+            $.get(apiHost + "api/Roaster/Profile/Run/" + roastProfile);
+        });
+
+        $("#profileStop").click(function () {
+            $.get(apiHost + "api/Roaster/Profile/Stop")
+        });
+
         
         var prevHoldTemperature = 100;
+        var prevRoastProfile;
         window.setInterval(function () {
             $.get(apiHost + 'api/Roaster/Status/Get', function (data) {
                 $("#roasterStatus").text(JSON.stringify(data, null, 2));
@@ -43,6 +59,11 @@
                 if (prevHoldTemperature != data.CurrentHoldTemperature) {
                     $("#holdTemperature").val(data.CurrentHoldTemperature);
                     prevHoldTemperature = data.CurrentHoldTemperature;
+                }
+                if (prevRoastProfile !== JSON.stringify(data.RoastProfile))
+                {
+                    $("#roastProfile").val(JSON.stringify(data.RoastProfile, null, 2));
+                    prevRoastProfile = JSON.stringify(data.RoastProfile);
                 }
                 
                 if (data.IsHoldOn)
@@ -54,6 +75,15 @@
                 {
                     $("#holdOn").show();
                     $("#holdOff").hide();
+                }
+
+                if (data.IsProfileRunning) {
+                    $("#profileRun").hide();
+                    $("#profileStop").show();
+                }
+                else {
+                    $("#profileRun").show();
+                    $("#profileStop").hide();
                 }
             });
         }, 1000);
