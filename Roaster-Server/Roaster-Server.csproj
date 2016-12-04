@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Apps\FanApp.cs" />
     <Compile Include="Apps\HeaterApp.cs" />
+    <Compile Include="Apps\ProfileApp.cs" />
     <Compile Include="Apps\RoasterApp.cs" />
     <Compile Include="Apps\TemperatureProbeApp.cs" />
     <Compile Include="Controllers\API\RoasterController.cs" />

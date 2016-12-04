@@ -15,7 +15,7 @@ namespace Roaster_Server.Models
         public bool IsHeaterOn { get; set; }
         public bool IsFanOn { get; set; }
         public bool IsProfileRunning { get; set; }
-        public double ProfileElapsedSeconds { get; set; }
+        public string ProfileElapsedTime { get; set; }
         public List<RoastProfile> RoastProfile { get; set; }
     }
 }
