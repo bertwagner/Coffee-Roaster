@@ -16,26 +16,28 @@ namespace Roaster_Server.Apps
 
         /*TODO: 
          * Load Defulat profile, save profiles, load profiles
-         * Create run data controller: first crack, second crack
+         * Create run data controller: first crack, second crack, cold start temperature (winter vs summer), bean weight
+         * 
         */
+
+        private StateApp state;
         private FanApp fan;
         private HeaterApp heater;
         private TemperatureProbeApp temperatureProbe;
         private ProfileApp profile;
+        private HoldApp hold;
 
-        private decimal holdFahrenheitTemperature { get; set; }
-        private bool isHoldOn { get; set; }
         private bool runLoop { get; set; }
 
         public RoasterApp()
         {
+            state = new StateApp();
             fan = new FanApp();
             heater = new HeaterApp();
             temperatureProbe = new TemperatureProbeApp(TemperatureScale.Fahrenheit);
             profile = new ProfileApp();
+            hold = new HoldApp();
 
-            isHoldOn = false;
-            holdFahrenheitTemperature = 100;
             runLoop = true;
 
             // Start the roaster loop on a new thread
@@ -45,9 +47,9 @@ namespace Roaster_Server.Apps
         public RoasterStatus GetRoasterStatus()
         {
             RoasterStatus status = new RoasterStatus();
-            status.CurrentHoldTemperature = GetHoldTemperture();
+            status.CurrentHoldTemperature = hold.GetTemperature();
             status.CurrentTemperature = temperatureProbe.CurrentTemperature();
-            status.IsHoldOn = IsHoldOn();
+            status.IsHoldOn = hold.IsOn();
             status.IsFanOn = fan.IsOn();
             status.IsHeaterOn = heater.IsOn();
             status.IsProfileRunning = profile.IsRunning();
@@ -68,7 +70,7 @@ namespace Roaster_Server.Apps
                 }
 
                 // If the hold is off, make sure the fan stays on until the temperature goes below 100*F
-                if (!IsHoldOn() && temperatureProbe.CurrentTemperature() > 100)
+                if (!hold.IsOn() && temperatureProbe.CurrentTemperature() > 100)
                 {
                     heater.Off();
                     fan.On();
@@ -77,16 +79,16 @@ namespace Roaster_Server.Apps
                 // If hold is off turn the heater and fan off.  
                 // We choose 90 because once the fan turns off, some residual heat will increase the temperture
                 // and we don't want the fan getting toggled on/off rapidly if the temperature sits around 100*F
-                if (!IsHoldOn() && temperatureProbe.CurrentTemperature() < 90)
+                if (!hold.IsOn() && temperatureProbe.CurrentTemperature() < 90)
                 {
                     heater.Off();
                     fan.Off();
                 }
 
                 // If the Hold button is on, alternate between turning the heater on/off until the Hold temperature is reached
-                if (IsHoldOn())
+                if (hold.IsOn())
                 {
-                    MaintainTemperature(GetHoldTemperture());
+                    MaintainTemperature(hold.GetTemperature());
                 }
 
                 // If the roast profile is on, follow the temperature and time settings indicated by the profile
@@ -144,43 +146,6 @@ namespace Roaster_Server.Apps
         {
             runLoop = false;
             ShutdownManager.BeginShutdown(ShutdownKind.Shutdown, new TimeSpan(0));
-        }
-
-        public void HoldOn(decimal temperature)
-        {
-            holdFahrenheitTemperature = temperature;
-            isHoldOn = true;
-        }
-
-        public void HoldOff()
-        {
-            isHoldOn = false;
-            heater.Off();
-        }
-
-        public bool IsHoldOn()
-        {
-            return isHoldOn;
-        }
-
-        public decimal GetHoldTemperture()
-        {
-            return holdFahrenheitTemperature;
-        }
-
-        public void SetRoastProfile(List<RoastProfile> newProfile)
-        {
-            profile.SetCurrentProfile(newProfile);
-        }
-
-        public void RunProfile()
-        {
-            profile.Run();
-        }
-
-        public void StopProfile()
-        {
-            profile.Stop();
         }
     }
 }

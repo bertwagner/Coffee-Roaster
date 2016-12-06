@@ -20,7 +20,8 @@ namespace Roast_Server.Controllers.API
     [RestController(InstanceCreationType.Singleton)]
     class RoasterController
     {
-        RoasterApp roaster = new RoasterApp();
+        RoasterApp roaster = new RoasterApp(); 
+        ProfileApp profile = new ProfileApp();
 
         [UriFormat("/Roaster/Shutdown")]
         public IGetResponse Shutdown()
@@ -57,11 +58,11 @@ namespace Roast_Server.Controllers.API
         }
 
         [UriFormat("/Roaster/Profile/Run/{profile}")]
-        public IGetResponse RunProfile(string profile)
+        public IGetResponse RunProfile(string newProfile)
         {
-            List<RoastProfile> roastProfile = JsonConvert.DeserializeObject<List<RoastProfile>>(profile);
-            roaster.SetRoastProfile(roastProfile);
-            roaster.RunProfile();
+            List<RoastProfile> roastProfile = JsonConvert.DeserializeObject<List<RoastProfile>>(newProfile);
+            profile.SetCurrentProfile(roastProfile);
+            profile.Run();
 
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
@@ -69,7 +70,7 @@ namespace Roast_Server.Controllers.API
         [UriFormat("/Roaster/Profile/Stop")]
         public IGetResponse StopProfile()
         {
-            roaster.StopProfile();
+            profile.Stop();
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
     }

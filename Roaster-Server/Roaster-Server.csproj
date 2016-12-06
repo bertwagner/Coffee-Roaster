@@ -98,11 +98,11 @@
   <ItemGroup>
     <Compile Include="Apps\FanApp.cs" />
     <Compile Include="Apps\HeaterApp.cs" />
+    <Compile Include="Apps\HoldApp.cs" />
     <Compile Include="Apps\ProfileApp.cs" />
     <Compile Include="Apps\RoasterApp.cs" />
     <Compile Include="Apps\TemperatureProbeApp.cs" />
     <Compile Include="Controllers\API\RoasterController.cs" />
-    <Compile Include="Controllers\API\ProfileController.cs" />
     <Compile Include="Controllers\Device\Relay.cs" />
     <Compile Include="Controllers\Device\TemperatureProbe.cs" />
     <Compile Include="Models\DataReceived.cs" />
