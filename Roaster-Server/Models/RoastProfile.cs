@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Roast_Server.Models
 {
-    internal sealed class RoastProfile
+    internal class RoastProfile
     {
         public int TimeInSeconds { get; set; }
         public float HoldTemperature { get; set; }

@@ -6,12 +6,22 @@ using System.Threading.Tasks;
 
 namespace Roaster_Server.Apps
 {
-    class HoldApp
+    sealed class HoldApp
     {
+        private static readonly HoldApp instance = new HoldApp();
+
+        public static HoldApp Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
         private decimal holdTemperature { get; set; }
         private bool isHoldOn { get; set; }
 
-        public HoldApp()
+        private HoldApp()
         {
             isHoldOn = false;
             holdTemperature = 100;

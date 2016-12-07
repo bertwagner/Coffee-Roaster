@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Roast_Server.Models
 {
-    internal sealed class DataReceived
+    internal class DataReceived
     {
         public int ID { get; set; }
         public string PropName { get; set; }

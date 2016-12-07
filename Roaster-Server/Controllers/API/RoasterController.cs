@@ -20,13 +20,10 @@ namespace Roast_Server.Controllers.API
     [RestController(InstanceCreationType.Singleton)]
     class RoasterController
     {
-        RoasterApp roaster = new RoasterApp(); 
-        ProfileApp profile = new ProfileApp();
-
         [UriFormat("/Roaster/Shutdown")]
         public IGetResponse Shutdown()
         {
-            roaster.Shutdown();
+            RoasterApp.Instance.Shutdown();
 
             return new GetResponse(
                 GetResponse.ResponseStatus.OK
@@ -36,7 +33,7 @@ namespace Roast_Server.Controllers.API
         [UriFormat("/Roaster/HoldTemperature/On/{temperature}")]
         public IGetResponse HoldTemperatureOn(decimal temperature)
         {
-            roaster.HoldOn(temperature);
+            HoldApp.Instance.On(temperature);
 
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
@@ -44,7 +41,7 @@ namespace Roast_Server.Controllers.API
         [UriFormat("/Roaster/HoldTemperature/Off")]
         public IGetResponse HoldTemperatureOff()
         {
-            roaster.HoldOff();
+            HoldApp.Instance.Off();
 
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
@@ -52,17 +49,17 @@ namespace Roast_Server.Controllers.API
         [UriFormat("/Roaster/Status/Get")]
         public IGetResponse GetRoasterStatus()
         {
-            RoasterStatus status = roaster.GetRoasterStatus();
+            RoasterStatus status = RoasterApp.Instance.GetRoasterStatus();
 
             return new GetResponse(GetResponse.ResponseStatus.OK, status);
         }
 
-        [UriFormat("/Roaster/Profile/Run/{profile}")]
+        [UriFormat("/Roaster/Profile/Run/{newProfile}")]
         public IGetResponse RunProfile(string newProfile)
         {
             List<RoastProfile> roastProfile = JsonConvert.DeserializeObject<List<RoastProfile>>(newProfile);
-            profile.SetCurrentProfile(roastProfile);
-            profile.Run();
+            ProfileApp.Instance.SetCurrentProfile(roastProfile);
+            ProfileApp.Instance.Run();
 
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
@@ -70,7 +67,7 @@ namespace Roast_Server.Controllers.API
         [UriFormat("/Roaster/Profile/Stop")]
         public IGetResponse StopProfile()
         {
-            profile.Stop();
+            ProfileApp.Instance.Stop();
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
     }

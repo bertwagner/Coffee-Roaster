@@ -8,13 +8,23 @@ using System.Threading.Tasks;
 
 namespace Roaster_Server.Apps
 {
-    class ProfileApp
+    sealed class ProfileApp
     {
+        private static readonly ProfileApp instance = new ProfileApp();
+
+        public static ProfileApp Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
         private List<RoastProfile> currentProfile;
         private bool isProfileRunning { get; set; }
         private Stopwatch stopWatch { get; set; }
 
-        public ProfileApp()
+        private ProfileApp()
         {
             currentProfile = new List<RoastProfile>
             {
@@ -30,7 +40,7 @@ namespace Roaster_Server.Apps
             stopWatch = new Stopwatch();
         }
 
-        public void SetCurrentProfile(List<RoastProfile> profile)
+        internal void SetCurrentProfile(List<RoastProfile> profile)
         {
             currentProfile = profile;
         }

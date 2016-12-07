@@ -2,6 +2,8 @@
 using Restup.Webserver.Rest;
 using Roast_Server.Controllers.API;
 using Restup.Webserver.Http;
+using System;
+using System.Diagnostics;
 
 namespace Roaster_Server
 {
@@ -15,7 +17,13 @@ namespace Roaster_Server
 
             // Start the API server
             var restRouteHandler = new RestRouteHandler();
-            restRouteHandler.RegisterController<RoasterController>();
+            try { 
+                restRouteHandler.RegisterController<RoasterController>();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
 
             var configuration = new HttpServerConfiguration()
               .ListenOnPort(9900)
