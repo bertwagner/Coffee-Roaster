@@ -19,6 +19,8 @@
     <button id="profileStop">Stop Profile</button>
 
     <button id="GetCurrentLog">Write Current Log to Console</button>
+    <button id="FirstCrack">Mark First Crack</button>
+    <button id="SecondCrack">Mark Second Crack</button>
 
     <pre id="roasterStatus"></pre>
 
@@ -54,6 +56,14 @@
             $.get(apiHost + "api/Log/GetCurrentLog", function (data) {
                 console.log(data);
             });
+        });
+
+        $("#FirstCrack").click(function () {
+            $.get(apiHost + "api/Log/SetFirstCrack");
+        });
+
+        $("#SecondCrack").click(function () {
+            $.get(apiHost + "api/Log/SetSecondCrack");
         });
 
         

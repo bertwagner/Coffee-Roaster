@@ -38,5 +38,9 @@ namespace Roast_Server.Controllers.API
             ProfileApp.Instance.Stop();
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
+
+        //Save profile to db
+
+        //Load profile from db
     }
 }

@@ -26,6 +26,8 @@ namespace Roast_Server.Controllers.API
             return new GetResponse(GetResponse.ResponseStatus.OK, LogApp.Instance.GetCurrentLog());
         }
 
+        // Get log data since last request
+
         [UriFormat("/Log/SetFirstCrack")]
         public IGetResponse SetFirstCrack()
         {
@@ -39,5 +41,7 @@ namespace Roast_Server.Controllers.API
             LogApp.Instance.SetSecondCrack();
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
+
+        // Save log with already saved profile to database
     }
 }
