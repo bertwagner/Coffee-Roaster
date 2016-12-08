@@ -102,6 +102,7 @@
     <Compile Include="Apps\ProfileApp.cs" />
     <Compile Include="Apps\RoasterApp.cs" />
     <Compile Include="Apps\TemperatureProbeApp.cs" />
+    <Compile Include="Controllers\API\ProfileController.cs" />
     <Compile Include="Controllers\API\RoasterController.cs" />
     <Compile Include="Controllers\Device\Relay.cs" />
     <Compile Include="Controllers\Device\TemperatureProbe.cs" />

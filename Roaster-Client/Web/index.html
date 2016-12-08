@@ -41,11 +41,11 @@
 
         $("#profileRun").click(function () {
             var roastProfile = $("#roastProfile").val();
-            $.get(apiHost + "api/Roaster/Profile/Run/" + roastProfile);
+            $.get(apiHost + "api/Profile/Run/" + roastProfile);
         });
 
         $("#profileStop").click(function () {
-            $.get(apiHost + "api/Roaster/Profile/Stop")
+            $.get(apiHost + "api/Profile/Stop")
         });
 
         

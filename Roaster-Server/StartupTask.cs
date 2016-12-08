@@ -19,6 +19,7 @@ namespace Roaster_Server
             var restRouteHandler = new RestRouteHandler();
             try { 
                 restRouteHandler.RegisterController<RoasterController>();
+                restRouteHandler.RegisterController<ProfileController>();
             }
             catch (Exception ex)
             {
