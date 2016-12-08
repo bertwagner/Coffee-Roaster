@@ -9,21 +9,32 @@ namespace Roaster_Server.Apps
 {
     public enum TemperatureScale { Fahrenheit, Celcius };
 
-    class TemperatureProbeApp
+    sealed class TemperatureProbeApp
     {
-        private TemperatureProbe probe = new TemperatureProbe();
+        private static readonly TemperatureProbeApp instance = new TemperatureProbeApp();
+        public static TemperatureProbeApp Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
         private TemperatureScale scale;
         private decimal previousFahrenheitTemperature;
+        private TemperatureProbe probe;
 
-        public TemperatureProbeApp(TemperatureScale temperatureScale)
+        private TemperatureProbeApp()
         {
-            scale = temperatureScale;
+            scale = TemperatureScale.Fahrenheit;
             previousFahrenheitTemperature = -999;
+            probe = new TemperatureProbe();
         }
 
         public decimal CurrentTemperature()
         {
             decimal currentTemperature = (scale == TemperatureScale.Fahrenheit) ? probe.GetProbeTemperatureDataFahrenheit() : probe.GetProbeTemperatureDataCelsius();
+
 
             for (var i = 0; i < 10; i++)
             {

@@ -32,13 +32,11 @@ namespace Roaster_Server.Apps
 
         private FanApp fan;
         private HeaterApp heater;
-        private TemperatureProbeApp temperatureProbe;
 
         private RoasterApp()
         {
             fan = new FanApp();
             heater = new HeaterApp();
-            temperatureProbe = new TemperatureProbeApp(TemperatureScale.Fahrenheit);
 
             runLoop = true;
 
@@ -52,7 +50,7 @@ namespace Roaster_Server.Apps
         {
             RoasterStatus status = new RoasterStatus();
             status.CurrentHoldTemperature = HoldApp.Instance.GetTemperature();
-            status.CurrentTemperature = temperatureProbe.CurrentTemperature();
+            status.CurrentTemperature = TemperatureProbeApp.Instance.CurrentTemperature();
             status.IsHoldOn = HoldApp.Instance.IsOn();
             status.IsFanOn = fan.IsOn();
             status.IsHeaterOn = heater.IsOn();
@@ -74,7 +72,7 @@ namespace Roaster_Server.Apps
                 }
 
                 // If the hold is off, make sure the fan stays on until the temperature goes below 100*F
-                if (!HoldApp.Instance.IsOn() && temperatureProbe.CurrentTemperature() > 100)
+                if (!HoldApp.Instance.IsOn() && TemperatureProbeApp.Instance.CurrentTemperature() > 100)
                 {
                     heater.Off();
                     fan.On();
@@ -83,7 +81,7 @@ namespace Roaster_Server.Apps
                 // If hold is off turn the heater and fan off.  
                 // We choose 90 because once the fan turns off, some residual heat will increase the temperture
                 // and we don't want the fan getting toggled on/off rapidly if the temperature sits around 100*F
-                if (!HoldApp.Instance.IsOn() && temperatureProbe.CurrentTemperature() < 90)
+                if (!HoldApp.Instance.IsOn() && TemperatureProbeApp.Instance.CurrentTemperature() < 90)
                 {
                     heater.Off();
                     fan.Off();
@@ -123,7 +121,7 @@ namespace Roaster_Server.Apps
 
 
                 // Log the time/temperature data
-                Debug.WriteLine("Temperature: {0}, Hold: {1}, Hold Temperature: {2}", temperatureProbe.CurrentTemperature(), (HoldApp.Instance.IsOn()) ? "On" : "Off", HoldApp.Instance.GetTemperature());
+                Debug.WriteLine("Temperature: {0}, Hold: {1}, Hold Temperature: {2}", TemperatureProbeApp.Instance.CurrentTemperature(), (HoldApp.Instance.IsOn()) ? "On" : "Off", HoldApp.Instance.GetTemperature());
 
                 // Slow down our loop so it only runs every 100ms
                 Task.Delay(100).Wait();
@@ -133,7 +131,7 @@ namespace Roaster_Server.Apps
         private void MaintainTemperature(decimal temperature)
         {
             fan.On();
-            if (temperatureProbe.CurrentTemperature() <= temperature)
+            if (TemperatureProbeApp.Instance.CurrentTemperature() <= temperature)
             {
                 heater.On();
             }
@@ -142,7 +140,7 @@ namespace Roaster_Server.Apps
                 heater.Off();
             }
 
-            Debug.WriteLine("Maintaining: {0}, Actual: {2}, Heater: {1}", temperature, heater.IsOn(), temperatureProbe.CurrentTemperature());
+            Debug.WriteLine("Maintaining: {0}, Actual: {2}, Heater: {1}", temperature, heater.IsOn(), TemperatureProbeApp.Instance.CurrentTemperature());
 
         }
 

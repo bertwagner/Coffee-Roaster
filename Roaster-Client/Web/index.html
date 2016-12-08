@@ -18,6 +18,8 @@
     <button id="profileRun">Run Profile</button>
     <button id="profileStop">Stop Profile</button>
 
+    <button id="GetCurrentLog">Write Current Log to Console</button>
+
     <pre id="roasterStatus"></pre>
 
     <script src="Scripts/jquery-2.2.4.min.js"></script>
@@ -46,6 +48,12 @@
 
         $("#profileStop").click(function () {
             $.get(apiHost + "api/Profile/Stop")
+        });
+
+        $("#GetCurrentLog").click(function () {
+            $.get(apiHost + "api/Log/GetCurrentLog", function (data) {
+                console.log(data);
+            });
         });
 
         

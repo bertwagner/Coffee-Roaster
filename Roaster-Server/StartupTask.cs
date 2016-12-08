@@ -20,6 +20,7 @@ namespace Roaster_Server
             try { 
                 restRouteHandler.RegisterController<RoasterController>();
                 restRouteHandler.RegisterController<ProfileController>();
+                restRouteHandler.RegisterController<LogController>();
             }
             catch (Exception ex)
             {

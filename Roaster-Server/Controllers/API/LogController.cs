@@ -18,24 +18,25 @@ using Newtonsoft.Json;
 namespace Roast_Server.Controllers.API
 {
     [RestController(InstanceCreationType.Singleton)]
-    class ProfileController
+    class LogController
     {
-        [UriFormat("/Profile/Run/{newProfile}")]
-        public IGetResponse RunProfile(string newProfile)
+        [UriFormat("/Log/GetCurrentLog")]
+        public IGetResponse GetCurrentLog()
         {
-            List<RoastProfile> roastProfile = JsonConvert.DeserializeObject<List<RoastProfile>>(newProfile);
-            ProfileApp.Instance.SetCurrentProfile(roastProfile);
-            ProfileApp.Instance.Run();
-            LogApp.Instance.StartLog();
+            return new GetResponse(GetResponse.ResponseStatus.OK, LogApp.Instance.GetCurrentLog());
+        }
 
+        [UriFormat("/Log/SetFirstCrack")]
+        public IGetResponse SetFirstCrack()
+        {
+            LogApp.Instance.SetFirstCrack();
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
 
-        [UriFormat("/Profile/Stop")]
-        public IGetResponse StopProfile()
+        [UriFormat("/Log/SetSecondCrack")]
+        public IGetResponse SetSecondCrack()
         {
-            LogApp.Instance.StopLog();
-            ProfileApp.Instance.Stop();
+            LogApp.Instance.SetSecondCrack();
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
     }
