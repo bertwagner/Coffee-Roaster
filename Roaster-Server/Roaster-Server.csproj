@@ -99,6 +99,7 @@
     <Compile Include="Apps\FanApp.cs" />
     <Compile Include="Apps\HeaterApp.cs" />
     <Compile Include="Apps\HoldApp.cs" />
+    <Compile Include="Apps\DatabaseApp.cs" />
     <Compile Include="Apps\LogApp.cs" />
     <Compile Include="Apps\ProfileApp.cs" />
     <Compile Include="Apps\RoasterApp.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Controllers\API\RoasterController.cs" />
     <Compile Include="Controllers\Device\Relay.cs" />
     <Compile Include="Controllers\Device\TemperatureProbe.cs" />
+    <Compile Include="Models\Database\Profile.cs" />
     <Compile Include="Models\DataReceived.cs" />
     <Compile Include="Models\RoasterStatus.cs" />
     <Compile Include="Models\RoastLog.cs" />
@@ -146,6 +148,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.15.2">
+      <Name>SQLite for Universal Windows Platform</Name>
+    </SDKReference>
     <SDKReference Include="WindowsIoT, Version=10.0.14393.0">
       <Name>Windows IoT Extensions for the UWP</Name>
     </SDKReference>

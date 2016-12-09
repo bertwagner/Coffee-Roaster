@@ -14,6 +14,7 @@ using Roaster_Server.Models;
 using Roast_Server.Models;
 using Newtonsoft;
 using Newtonsoft.Json;
+using Roaster_Server.Models.Database;
 
 namespace Roast_Server.Controllers.API
 {
@@ -39,8 +40,18 @@ namespace Roast_Server.Controllers.API
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
 
-        //Save profile to db
+        [UriFormat("/Profile/Save")]
+        public IGetResponse Save()
+        {
+            DatabaseApp.Instance.SaveData(new Profile());
+            return new GetResponse(GetResponse.ResponseStatus.OK);
+        }
 
-        //Load profile from db
+        [UriFormat("/Profile/Read")]
+        public IGetResponse Read()
+        {
+            string text = DatabaseApp.Instance.ReadData();
+            return new GetResponse(GetResponse.ResponseStatus.OK, text);
+        }
     }
 }
