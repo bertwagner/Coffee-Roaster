@@ -1,4 +1,6 @@
 ﻿using Roast_Server.Models;
+using Roaster_Server.Models;
+using Roaster_Server.Models.Database;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,32 +22,37 @@ namespace Roaster_Server.Apps
             }
         }
 
-        private List<RoastProfile> currentProfile;
+        private RoastProfile currentProfile;
         private bool isProfileRunning { get; set; }
         private Stopwatch stopWatch { get; set; }
 
         private ProfileApp()
         {
-            currentProfile = new List<RoastProfile>
+            currentProfile = new RoastProfile
             {
-                new RoastProfile { TimeInSeconds = 180, HoldTemperature = 300 },
-                new RoastProfile { TimeInSeconds = 240, HoldTemperature = 333 },
-                new RoastProfile { TimeInSeconds = 300, HoldTemperature = 366 },
-                new RoastProfile { TimeInSeconds = 360, HoldTemperature = 400 },
-                new RoastProfile { TimeInSeconds = 420, HoldTemperature = 415 },
-                new RoastProfile { TimeInSeconds = 480, HoldTemperature = 430 },
-                new RoastProfile { TimeInSeconds = 510, HoldTemperature = 445 }
+                Name = "",
+                BeanGrams = 25,
+                RoastSchedule = new List<RoastSchedule>
+                {
+                    new RoastSchedule { TimeInSeconds = 180, HoldTemperature = 300 },
+                    new RoastSchedule { TimeInSeconds = 240, HoldTemperature = 333 },
+                    new RoastSchedule { TimeInSeconds = 300, HoldTemperature = 366 },
+                    new RoastSchedule { TimeInSeconds = 360, HoldTemperature = 400 },
+                    new RoastSchedule { TimeInSeconds = 420, HoldTemperature = 415 },
+                    new RoastSchedule { TimeInSeconds = 480, HoldTemperature = 430 },
+                    new RoastSchedule { TimeInSeconds = 510, HoldTemperature = 445 }
+                }
             };
             isProfileRunning = false;
             stopWatch = new Stopwatch();
         }
 
-        internal void SetCurrentProfile(List<RoastProfile> profile)
+        internal void SetCurrentProfile(RoastProfile profile)
         {
             currentProfile = profile;
         }
 
-        public List<RoastProfile> GetCurrentProfile()
+        public RoastProfile GetCurrentProfile()
         {
             return currentProfile;
         }

@@ -13,13 +13,6 @@ namespace Roaster_Server.Apps
 {
     sealed class RoasterApp
     {
-
-        /*TODO: 
-         * Load Defulat profile, save profiles, load profiles
-         * Create run data controller: first crack, second crack, cold start temperature (winter vs summer), bean weight
-         * 
-        */
-
         private static readonly RoasterApp instance = new RoasterApp();
 
         public static RoasterApp Instance
@@ -56,7 +49,7 @@ namespace Roaster_Server.Apps
             status.IsHeaterOn = heater.IsOn();
             status.IsProfileRunning = ProfileApp.Instance.IsRunning();
             status.ProfileElapsedTime = ProfileApp.Instance.ElapsedRunTime().TotalSeconds.ToString();
-            status.RoastProfile = ProfileApp.Instance.GetCurrentProfile();
+            status.RoastSchedule = ProfileApp.Instance.GetCurrentProfile().RoastSchedule;
 
             return status;
         }
@@ -99,11 +92,11 @@ namespace Roaster_Server.Apps
                     Debug.WriteLine("Profile starting to run");
                     var currentRoastProfile = ProfileApp.Instance.GetCurrentProfile();
 
-                    for (int i = 0; i < currentRoastProfile.Count; i++)
+                    for (int i = 0; i < currentRoastProfile.RoastSchedule.Count; i++)
                     {
-                        while (ProfileApp.Instance.ElapsedRunTime().TotalSeconds < currentRoastProfile[i].TimeInSeconds)
+                        while (ProfileApp.Instance.ElapsedRunTime().TotalSeconds < currentRoastProfile.RoastSchedule[i].TimeInSeconds)
                         {
-                            MaintainTemperature(Convert.ToDecimal(currentRoastProfile[i].HoldTemperature));
+                            MaintainTemperature(Convert.ToDecimal(currentRoastProfile.RoastSchedule[i].HoldTemperature));
 
                             //Exit loop if profile has been turned off
                             if (!ProfileApp.Instance.IsRunning())

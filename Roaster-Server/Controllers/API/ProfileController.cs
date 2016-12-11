@@ -24,7 +24,7 @@ namespace Roast_Server.Controllers.API
         [UriFormat("/Profile/Run/{newProfile}")]
         public IGetResponse RunProfile(string newProfile)
         {
-            List<RoastProfile> roastProfile = JsonConvert.DeserializeObject<List<RoastProfile>>(newProfile);
+            RoastProfile roastProfile = JsonConvert.DeserializeObject<RoastProfile>(newProfile);
             ProfileApp.Instance.SetCurrentProfile(roastProfile);
             ProfileApp.Instance.Run();
             LogApp.Instance.StartLog();
@@ -40,18 +40,28 @@ namespace Roast_Server.Controllers.API
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
 
-        [UriFormat("/Profile/Save")]
-        public IGetResponse Save()
+        [UriFormat("/Profile/Save/{newProfile}")]
+        public IGetResponse Save(string newProfile)
         {
-            DatabaseApp.Instance.SaveData(new Profile());
+            RoastProfile roastProfile = JsonConvert.DeserializeObject<RoastProfile>(newProfile);
+            ProfileApp.Instance.SetCurrentProfile(roastProfile);
+            RoastProfile profile = ProfileApp.Instance.GetCurrentProfile();
+            DatabaseApp.Instance.SaveProfile(profile);
             return new GetResponse(GetResponse.ResponseStatus.OK);
         }
 
-        [UriFormat("/Profile/Read")]
-        public IGetResponse Read()
+        [UriFormat("/Profile/Load/{id}")]
+        public IGetResponse Load(int id)
         {
-            string text = DatabaseApp.Instance.ReadData();
-            return new GetResponse(GetResponse.ResponseStatus.OK, text);
+            RoastProfile profile = DatabaseApp.Instance.LoadProfile(id);
+            return new GetResponse(GetResponse.ResponseStatus.OK, profile);
+        }
+
+        [UriFormat("Profiles")]
+        public IGetResponse Profiles()
+        {
+            Dictionary<int, string> profiles = DatabaseApp.Instance.GetProfiles();
+            return new GetResponse(GetResponse.ResponseStatus.OK, profiles);
         }
     }
 }

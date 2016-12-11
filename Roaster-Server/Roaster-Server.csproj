@@ -112,9 +112,10 @@
     <Compile Include="Controllers\Device\TemperatureProbe.cs" />
     <Compile Include="Models\Database\Profile.cs" />
     <Compile Include="Models\DataReceived.cs" />
+    <Compile Include="Models\RoastProfile.cs" />
     <Compile Include="Models\RoasterStatus.cs" />
     <Compile Include="Models\RoastLog.cs" />
-    <Compile Include="Models\RoastProfile.cs" />
+    <Compile Include="Models\RoastSchedule.cs" />
     <Compile Include="StartupTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

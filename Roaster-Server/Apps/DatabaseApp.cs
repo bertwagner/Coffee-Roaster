@@ -1,4 +1,6 @@
-﻿using Roast_Server.Models;
+﻿using Newtonsoft.Json;
+using Roast_Server.Models;
+using Roaster_Server.Models;
 using Roaster_Server.Models.Database;
 using SQLite.Net;
 using SQLite.Net.Platform.WinRT;
@@ -41,27 +43,43 @@ namespace Roaster_Server.Apps
             conn = new SQLite.Net.SQLiteConnection(new SQLitePlatformWinRT(), dbPath);
         }
 
-        public void SaveData(Profile data)
+        public void SaveProfile(RoastProfile data)
         {
-            var s = conn.Insert(new Profile()
+            Profile profile = new Models.Database.Profile
             {
                 CreateDate = DateTime.Now,
-                Name = "Profile #1",
-                RoastProfile = "test profile data"
-            });
+                LastModifiedDate = DateTime.Now,
+                Name = data.Name,
+                BeanGrams = data.BeanGrams,
+                RoastSchedule = JsonConvert.SerializeObject(data.RoastSchedule)
+            };
+            var s = conn.Insert(profile);
         }
 
-        public string ReadData()
+        public RoastProfile LoadProfile(int id)
         {
-            var query = conn.Table<Profile>();
-
-            string text = "";
-            foreach (var message in query)
+            Profile profile = conn.Table<Profile>().Where(x => x.Id == id).First();
+            RoastProfile roastProfile = new RoastProfile
             {
-                text = text + " " + message.RoastProfile;
-            }
+                Name = profile.Name,
+                BeanGrams = profile.BeanGrams,
+                RoastSchedule = JsonConvert.DeserializeObject<List<RoastSchedule>>(profile.RoastSchedule)
+            };
+            
+            return roastProfile;
+        }
 
-            return text;
+        public void DeleteProfile(int id)
+        {
+            var profile = conn.Table<Profile>().Where(x => x.Id == id).First();
+
+            conn.Delete(profile);
+        }
+
+        public Dictionary<int,string> GetProfiles()
+        {
+            var profiles = conn.Table<Profile>().ToDictionary(x => x.Id, x => x.Name);
+            return profiles;
         }
     }
 }

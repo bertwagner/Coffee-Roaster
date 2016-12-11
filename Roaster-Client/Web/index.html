@@ -14,7 +14,12 @@
     <button id="holdOff">Hold Off</button>
 
     <br />
-    <textarea id="roastProfile" rows="10" cols="50"></textarea>
+    <textarea id="roastSchedule" rows="10" cols="50"></textarea>
+    <br />Name: <input id="profileName" />
+    <br />Bean Grams: <input id="beanGrams" type="number"/>
+    <br /><button id="profileSave">Save Profile</button>
+    <select id="profiles"></select>
+    <button id="profileLoad">Load Profile</button>
     <button id="profileRun">Run Profile</button>
     <button id="profileStop">Stop Profile</button>
 
@@ -30,6 +35,7 @@
         var apiHost = "http://" + ip + ":9900/";
         $("#holdOff").hide();
         $("#profileStop").hide();
+        GetProfilesDropdown();
 
         $("#holdOn").click(function () {
             var holdTemperature = $("#holdTemperature").val();
@@ -44,13 +50,47 @@
         });
 
         $("#profileRun").click(function () {
-            var roastProfile = $("#roastProfile").val();
-            $.get(apiHost + "api/Profile/Run/" + roastProfile);
+            var profile = GetSerializedRoastProfile();
+            $.get(apiHost + "api/Profile/Run/" + profile);
         });
 
         $("#profileStop").click(function () {
-            $.get(apiHost + "api/Profile/Stop")
+            $.get(apiHost + "api/Profile/Stop");
         });
+
+        $("#profileSave").click(function () {
+            var profile = GetSerializedRoastProfile();
+            $.get(apiHost + "api/Profile/Save/" + profile, function () {
+                GetProfilesDropdown();
+            });
+            
+        });
+
+        function GetSerializedRoastProfile()
+        {
+            var roastSchedule = $("#roastSchedule").val();
+            var profileName = $("#profileName").val();
+            var beanGrams = parseInt($("#beanGrams").val());
+            var profile =
+                {
+                    "Name": profileName,
+                    "BeanGrams": beanGrams,
+                    "RoastSchedule": $.parseJSON(roastSchedule)
+                };
+            console.log(profile);
+            console.log(JSON.stringify(profile));
+            return JSON.stringify(profile);
+        }
+        
+        function GetProfilesDropdown()
+        {
+            $("#profiles").empty();
+            $.get(apiHost + "api/Profiles", function (data) {
+                $.each(data, function (key, value) {
+                    $("#profiles").append("<option value='"+key+"'>" + value + "</option>");
+                });
+            });
+        }
 
         $("#GetCurrentLog").click(function () {
             $.get(apiHost + "api/Log/GetCurrentLog", function (data) {
@@ -68,7 +108,7 @@
 
         
         var prevHoldTemperature = 100;
-        var prevRoastProfile;
+        var prevRoastSchedule;
         window.setInterval(function () {
             $.get(apiHost + 'api/Roaster/Status/Get', function (data) {
                 $("#roasterStatus").text(JSON.stringify(data, null, 2));
@@ -78,10 +118,10 @@
                     $("#holdTemperature").val(data.CurrentHoldTemperature);
                     prevHoldTemperature = data.CurrentHoldTemperature;
                 }
-                if (prevRoastProfile !== JSON.stringify(data.RoastProfile))
+                if (prevRoastSchedule !== JSON.stringify(data.RoastSchedule))
                 {
-                    $("#roastProfile").val(JSON.stringify(data.RoastProfile, null, 2));
-                    prevRoastProfile = JSON.stringify(data.RoastProfile);
+                    $("#roastSchedule").val(JSON.stringify(data.RoastSchedule, null, 2));
+                    prevRoastSchedule = JSON.stringify(data.RoastSchedule);
                 }
                 
                 if (data.IsHoldOn)

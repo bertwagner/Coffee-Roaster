@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Roast_Server.Models;
+using SQLite.Net.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Roast_Server.Models
+namespace Roaster_Server.Models
 {
-    internal class RoastProfile
+    class RoastProfile
     {
-        public int TimeInSeconds { get; set; }
-        public float HoldTemperature { get; set; }
+        public string Name { get; set; }
+        public List<RoastSchedule> RoastSchedule { get; set; }
+        public int? BeanGrams { get; set; }
     }
 }
