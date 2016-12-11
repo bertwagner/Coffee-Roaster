@@ -31,8 +31,14 @@ namespace Roaster_Server.Apps
         private DatabaseApp()
         {
             dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Roaster.sqlite");
+
+            if (!File.Exists(dbPath))
+            {
+                string assetsPath = Path.Combine(Windows.ApplicationModel.Package.Current.InstalledLocation.Path, "Assets\\Roaster.sqlite");
+                string targetPath = dbPath;
+                File.Copy(assetsPath, targetPath);
+            }
             conn = new SQLite.Net.SQLiteConnection(new SQLitePlatformWinRT(), dbPath);
-            conn.CreateTable<Profile>();
         }
 
         public void SaveData(Profile data)
@@ -40,7 +46,6 @@ namespace Roaster_Server.Apps
             var s = conn.Insert(new Profile()
             {
                 CreateDate = DateTime.Now,
-                LastModifiedDate = DateTime.Now,
                 Name = "Profile #1",
                 RoastProfile = "test profile data"
             });

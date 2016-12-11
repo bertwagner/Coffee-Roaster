@@ -12,7 +12,7 @@ namespace Roaster_Server.Models.Database
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime LastModifiedDate { get; set; }
+        //public DateTime LastModifiedDate { get; set; }
         public string Name { get; set; }
         public string RoastProfile { get; set; }
     }
